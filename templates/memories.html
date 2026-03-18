@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Travel Memories</h1>
+    <p>Log the beautiful moments from your past adventures.</p>
+</section>
+
+<section class="content-section flex-row">
+    <!-- Form Side -->
+    <div class="form-container">
+        <h3>Log a Memory</h3>
+        <form action="/add_memory" method="POST" class="travel-form">
+            <div class="form-group">
+                <label for="title">Memory Title</label>
+                <input type="text" id="title" name="title" required placeholder="E.g., Eiffel Tower Sunset">
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location" required placeholder="E.g., Paris">
+            </div>
+            <div class="form-group">
+                <label for="date">Date</label>
+                <input type="date" id="date" name="date">
+            </div>
+            <div class="form-group">
+                <label for="description">Description of your memory</label>
+                <textarea id="description" name="description" rows="5" required placeholder="It was amazing because..."></textarea>
+            </div>
+            <button type="submit" class="btn primary-btn w-100">Save Memory</button>
+        </form>
+    </div>
+
+    <!-- List Side -->
+    <div class="list-container">
+        <h3>Past Adventures</h3>
+        {% if memories %}
+            <div class="timeline grid column-1">
+                {% for memory in memories %}
+                <div class="memory-card card">
+                    <div class="memory-content-wrapper">
+                        <div class="memory-header">
+                            <h4>{{ memory.title }}</h4>
+                            <span class="memory-location">📍 {{ memory.location }}</span>
+                        </div>
+                        <div class="memory-date">📅 {{ memory.date }}</div>
+                        <p class="memory-desc">{{ memory.description }}</p>
+                    </div>
+                    <div class="memory-actions">
+                        <a href="/delete_memory/{{ memory._id }}" class="btn danger-btn text-sm">Delete</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <p>No memories logged yet. Add your first adventure!</p>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

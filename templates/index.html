@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <h1>Discover Your Next Adventure</h1>
+        <p>Plan your itinerary and save beautiful travel memories seamlessly.</p>
+        <a href="/itinerary" class="btn primary-btn">Plan a Trip</a>
+    </div>
+</section>
+
+<section class="destinations-section">
+    <div class="section-header">
+        <h2>Popular Destinations</h2>
+        <p>Find inspiration for your next getaway.</p>
+    </div>
+    <div class="grid">
+        {% for dest in destinations %}
+        <div class="card destination-card">
+            <div class="card-image" style="background-image: url('{{ dest.image }}');"></div>
+            <div class="card-content">
+                <h3>{{ dest.name }}</h3>
+                <p>{{ dest.desc }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
