@@ -1,22 +1,39 @@
 pipeline {
     agent any
 
+    environment {
+        PYTHONUNBUFFERED = '1'
+    }
+
     stages {
-        stage('Install') {
+        stage('Checkout') {
             steps {
-                bat 'python -m pip install -r requirements.txt'
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                bat '''
+                IF EXIST venv rmdir /s /q venv
+                "C:\\Users\\sahan\\AppData\\Local\\Programs\\Python\\Python313\\python.exe" -m venv venv
+                venv\\Scripts\\python -m pip install --upgrade pip
+                venv\\Scripts\\pip install -r requirements.txt
+                '''
             }
         }
 
         stage('Test') {
             steps {
-                bat 'python -c "print(\'App working\')"'
+                bat '''
+                venv\\Scripts\\python -m py_compile app.py
+                '''
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Application deployed successfully'
+                echo 'Deployment successful (Simulation)'
             }
         }
     }
