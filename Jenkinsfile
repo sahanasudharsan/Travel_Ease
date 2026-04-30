@@ -26,7 +26,7 @@ pipeline {
         stage('Test') {
             steps {
                 bat '''
-                venv\\Scripts\\python -m py_compile app.py
+                venv\\Scripts\\python app.py
                 '''
             }
         }
